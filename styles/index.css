@@ -1,0 +1,39 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+h1{
+    font-size: 30px;
+}
+h1:hover{
+    background-color: aliceblue;
+    border: 2px solid darkgray;
+}
+button{
+    background-color: darkgray;
+    border: 2px solid black;
+    margin: 15px;
+    border-radius: 5px;
+}
+button:hover{
+    font-size: 20px;
+    border: 2px solid black ;
+}
+.escolha{
+    background-color: aliceblue;
+}
+.batalha{
+    display: none;
+    background-color: aliceblue;
+}
+.imagens{
+    background-color: aliceblue;
+}
