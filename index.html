@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Batalha Pokemon</title>
     <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
     <h1 class="titulo">Simulador de batalha pokemon</h1>
-    <h2>Desafio</h2>
-    <div class="escolha">
-        <button onclick="escolha('pikachu')">Pikachu</button>
-        <button onclick="escolha('bulbassauro')">Bulbassauro</button>
-        <button onclick="escolha('charmander')">Charmander</button>
+    <div id="escolha">
+        <p>escolha seu pokemon:</p>
+        <button onclick="escolha('Pikachu')">Pikachu</button>
+        <button onclick="escolha('Bulbassauro')">Bulbassauro</button>
+        <button onclick="escolha('Charizard')">Charizard</button>
     </div>
-    <div class="batalha">
+    <div id="batalha" style="display: none;">
+        <h2 id="titulo-batalha"></h2>
      <div class="imagens">
-         <img src="" alt="" id="jogador">
-         <img src="" alt="" id="CPU">
-
+         <img src= "" alt="Seu pokemon" id="img-jogador">
+         <img src= "" alt="Pokemon oponente" id="img-cpu">
          <p id="mensagem">Mensagem</p>
+         <button class="ataque" onclick="atacar()">Atacar</button>
+         <p id="status"></p>
      </div>
     </div>
-
-    <button class="ataque">Atacar</button>
 
     <script src="src/app.js"></script>
 </body>
