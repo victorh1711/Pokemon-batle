@@ -1,62 +1,65 @@
-//definimos os pokemons e seus atributos
-const pokemon ={
-    pikachu: {nome : 'Pikachu', vida: 60, defesa: 25, dano: 45},
-    bublassauro: {nome : 'Bulbassauro', vida: 115, defesa:30, dano: 20},
-    charizard: {nome : 'Charizard', vida: 75, defesa: 45, dano: 50}
-}
 
-//Nossos Jogadores
+const pokemons = {
+  pikachu: { nome: "Pikachu", vida: 100, forca: 40, defesa: 20, id: 25 },
+  bulbasaur: { nome: "Bulbasaur", vida: 100, forca: 35, defesa: 25, id: 1 },
+  charmander: { nome: "Charmander", vida: 100, forca: 45, defesa: 15, id: 4 }
+};
+
 let jogador, cpu;
 
-//Função para escolha do pokemon
-function escolha(nome){
-    //Escolha do usuario
-    jogador = {...pokemon[nome]};
-    //Filtrando pokemmon já escolhido
-    const opcao = pokemon.filter(opcao => opcao !== nome);
-    //Escolha do computador
-    const aleatorio = opcao[Math.floor(Math.random(opcao))];
-    cpu = {...pokemon[aleatorio]};
-    document.getElementById('escolha').style.display = 'none';
-    document.getElementById(batalha).style.display = 'block';
+function escolher(nome) {
+  jogador = { ...pokemons[nome] };
 
-    api(jogador.id, cpu.id);
+  const opcoes = Object.keys(pokemons).filter(p => p !== nome);
+  const aleatorio = opcoes[Math.floor(Math.random() * opcoes.length)];
+  cpu = { ...pokemons[aleatorio] };
 
+  document.getElementById("escolha").style.display = "none";
+  document.getElementById("batalha").style.display = "block";
+
+  document.getElementById("titulo-batalha").textContent = `${jogador.nome} vs ${cpu.nome}`;
+  carregarImagens(jogador.id, cpu.id);
+  atualizarStatus("A batalha começou!");
 }
 
-//Fução para o ataque
-function ataque(){
-    danoJogador = cpu.vida - jogador.dano;
-    danoCpu = jogador.vida - cpu.dano;
-    jogador.vida -= danoCpu;
-    cpu.vida -= danoJogador;
-
-    const statu = document.getElementById('status');
-    statu = `o ${jogador} causou ${danoJogador} de dano no ${cpu.nome}.`;
-    statu = `o ${cpu.nome} causou ${danoCpu} de dano no ${jogador.nome}.`;
-    statu = `Agora o jogador tem ${jogador.vida} e a cpu tem ${cpu.vida}.`;
-
-    if(jogador.vida <= 0) return;{
-        atualizaStatus(' A cpu ganhou a batalha!')
-    } 
-    if(cpu.vida && jogador.vida == 0){
-        atualizarStatus('Houve um empate!')
-    }
+function carregarImagens(idJogador, idCpu) {
+  document.getElementById("img-jogador").src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${idJogador}.png`;
+  document.getElementById("img-cpu").src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${idCpu}.png`;
 }
 
-//Função para a atualização dos status durante a batalha
-function atualizarStatus(mensagem){
-    document.getElementById('status').textContent = mensagem;
+function atacar() {    
+  if (jogador.vida <= 0 || cpu.vida <= 0) return;
+
+  const danoJogador = Math.max(0, jogador.forca - cpu.defesa);
+  const danoCpu = Math.max(0, cpu.forca - jogador.defesa);
+
+  cpu.vida -= danoJogador;
+  jogador.vida -= danoCpu;
+
+  let status = `${jogador.nome} atacou ${cpu.nome} causando ${danoJogador} de dano.\n`;
+  status += `${cpu.nome} contra-atacou causando ${danoCpu} de dano.\n`;
+  status += `\n${jogador.nome}: ${jogador.vida} HP\n${cpu.nome}: ${cpu.vida} HP`;
+
+  if (jogador.vida <= 0 && cpu.vida <= 0) {
+    status = "Empate! Ambos caíram na batalha!";
+    desativarBotao();
+  } else if (jogador.vida <= 0) {
+    status = `${cpu.nome} venceu a batalha!`;
+    desativarBotao();
+  } else if (cpu.vida <= 0) {
+    status = `${jogador.nome} venceu a batalha!`;
+    desativarBotao();
+  }
+
+  atualizarStatus(status);
 }
 
-//Fução que reinicia a batalha
-function limparbatalha(){
-    const button = document.getElementById('ataque');
-    button.disable = true;
+function atualizarStatus(msg) {
+  document.getElementById("status").textContent = msg;
 }
 
-//Função para fazer a requisição da API
-function api(){
-    document.getElementById(img-jogador).src = 
-    document.getElementById(img-cpu).src = 
+function desativarBotao() {
+  const botao = document.getElementById("ataque");
+  botao.disabled = true;
+  botao.textContent = "Fim da batalha";
 }
